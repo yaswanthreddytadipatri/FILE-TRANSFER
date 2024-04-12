@@ -27,12 +27,12 @@ app.get('/', (req, res) => {
 });
 
 // Handle file uploads
-app.post('/upload', upload.single('file'), (req, res) => {
-  if (!req.file) {
-    return res.status(400).send('No file uploaded.');
+app.post('/upload', upload.array('files[]'), (req, res) => {
+  if (!req.files || req.files.length === 0) {
+    return res.status(400).send('No files uploaded.');
   }
 
-  return res.status(200).send('File uploaded successfully.');
+  return res.status(200).send('Files uploaded successfully.');
 });
 
 app.listen(port, () => {
